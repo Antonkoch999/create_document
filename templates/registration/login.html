@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+
+{% block title %} LOGIN {% endblock %}
+{% block content %}
+<br><br>
+<div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Авторизация</h3>
+            <form action="." method="post"  style="margin-top:20px">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.username }}'></label>
+                            <input type="text" class="form-control" placeholder="Введите логин" required name="username"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.password }}'></label>
+                            <input type="password" class="form-control" placeholder="Введите пароль" required name="password"/></p>
+                    </div>
+                </div>
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="form-group g-recaptcha" data-sitekey="6LdsUfYZAAAAAMOLtjvqvi5V3i5IOmtzbyS8E6jp"></div>
+                <div class="text-center col-xs-12">
+                    <input type="hidden" name="next" value="{% url 'input:start_page' %}">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Войти" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

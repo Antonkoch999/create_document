@@ -1,0 +1,57 @@
+/*h1 {*/
+/*    color: blue;*/
+/*}*/
+
+/*h2 {*/
+/*    color: red;*/
+/*}*/
+
+html, body{
+    height: 100%;
+    max-height: 100%;
+}
+.general-container{
+    background: url("img/bg-img.jpg");
+    background-size: cover;
+    height: 100%;
+}
+.bd-black{
+    background-color: #FDD017;
+}
+
+h2{
+    margin: 109px 0 60px ;
+    font-size: 65px;
+    line-height: 82px;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    font-family: "Montserrat",Helvetica,sans-serif;
+}
+.btn-start{
+    font-size: 38px;
+    color: #FDD017;
+}
+.btn-find{
+    color: #FDD017;
+}
+a{
+    color: #fdd017;
+}
+.form-inline{
+    margin-left: 625px;
+    margin-bottom: 20px;
+    padding-top: 40px;
+    padding-bottom: 0;
+}
+.fixed-top{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.justify-content-center{
+    margin-top: 187px;
+}
+

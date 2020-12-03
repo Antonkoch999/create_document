@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Заполнение реквизитов клиента</h3>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.number_of_contract }}'></label>
+                            <input type="text" class="form-control" placeholder="Номер договора" name="number_of_contract" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.date_of_contract }}'></label>
+                            <input type="text" class="form-control" placeholder="Дата заключения договора" name="date_of_contract" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.city }}'></label>
+                            <input type="text" class="form-control" placeholder="Город" name="city" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.name_of_organization }}'></label>
+                            <input class="form-control" placeholder="Наименование организации" name="name_of_organization" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.in_face }}'></label>
+                            <input type="text" class="form-control" placeholder="В лице(Директора)" name="in_face" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.in_face_in_nominative }}'></label>
+                            <input type="text" class="form-control" placeholder="В лице в именительном падеже(Директор)" name="in_face_in_nominative" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.name_face_organizations }}'></label>
+                            <input type="text" class="form-control" placeholder="ФИО представителя организации" name="name_face_organizations" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.acting_on_the_basis }}'></label>
+                            <input type="text" class="form-control" placeholder="На основании(Устава)" name="acting_on_the_basis" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.legal_address }}'></label>
+                            <input class="form-control" placeholder="Юридический адрес" name="legal_address" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.address_of_bank }}'></label>
+                            <input class="form-control" placeholder="Банковские реквизиты" name="address_of_bank" required autocomplete="off" /></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.unp }}'></label>
+                            <input type="text" class="form-control" placeholder="УНП" name="unp" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.initials }}'></label>
+                            <input type="text" class="form-control" placeholder="Инициалы(И.И.Иванович)" name="initials" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.phone_number }}'></label>
+                            <input type="text" class="form-control" placeholder="Номер телефона" name="phone_number" autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.email }}'></label>
+                            <input type="email" class="form-control" placeholder="Email" name="initials" autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="text-center col-xs-12">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Добавить клиента" />
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>
+<!--<form action="" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    {{ create_form }}-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+{% endblock %}

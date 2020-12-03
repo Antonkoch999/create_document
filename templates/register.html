@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Create an account{% endblock %}
+{% block content %}
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Регистрация</h3>
+            <form action="." method="post"  style="margin-top:20px">
+                {% csrf_token %}
+                {{ user_form.errors }}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ user_form.username }}'></label>
+                            <input type="text" class="form-control" placeholder="Введите логин" name="username" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ user_form.email }}'></label>
+                            <input type="email" class="form-control" placeholder="Введите email" name="email" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ user_form.password }}'></label>
+                            <input type="password" class="form-control" placeholder="Введите пароль" name="password" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ user_form.password2 }}'></label>
+                            <input type="password" class="form-control" placeholder="Повторите пароль" name="password2" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="text-center col-xs-12">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Зарегистрироваться" />
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>
+{% endblock %}

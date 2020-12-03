@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!--<form action="" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    {{ form }}-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Генерация акта</h3>
+            <form action="." method="post"  style="margin-top:20px">
+                {% csrf_token %}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.number_document }}'></label>
+                            <input type="text" class="form-control" placeholder="Номер акта" name="number_document" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.data_creation }}'></label>
+                            <input type="text" class="form-control" placeholder="Дата заключения акта" name="data_creation" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.name_of_work }}'></label>
+                            <input type="text" class="form-control" placeholder="Наименование работ" name="name_of_work" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.count_hours }}'></label>
+                            <input type="text" class="form-control" placeholder="Количество часов" name="count_hours" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.cost }}'></label>
+                            <input type="text" class="form-control" placeholder="Стоимость работ" name="cost" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="text-center col-xs-12">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Отправить акт" />
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>
+{% endblock %}

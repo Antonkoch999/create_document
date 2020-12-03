@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- <div class="container container-register">-->
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <br>-->
+<!--            <h3>Список клиентов<a href="{% url 'input:create_client' %}" class="btn btn-lg btn-warning">Добавить клиента</a></h3>-->
+<!--            {% for client in clients %}-->
+<!--            <div class="row">-->
+<!--              <div class="col-sm-6">-->
+<!--                <div class="card">-->
+<!--                  <div class="card-body">-->
+<!--                    <h5 class="card-title">{{ client.name_of_organization }}</h5>-->
+<!--                    <p class="card-text">Дата заключения договора: {{ client.date_of_contract }}</p>-->
+<!--                    <a href="{{ client.get_absolute_url }}" class="btn btn-lg btn-warning btn-block">Подготовить акт</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+<!-- </div>-->
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3>Список клиентов<a href="{% url 'input:create_client' %}" class="btn btn-lg btn-warning">Добавить клиента</a></h3>
+            {% for client in clients %}
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ client.name_of_organization }}</h5>
+                    <p class="card-text">Дата заключения договора: {{ client.date_of_contract }}</p>
+                    <a href="{{ client.get_absolute_url }}" class="btn btn-lg btn-warning btn-block">Подготовить акт</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+ </div>
+{% endblock %}
