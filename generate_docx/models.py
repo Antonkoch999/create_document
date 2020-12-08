@@ -22,8 +22,8 @@ class Client(models.Model):
     address_of_bank = models.TextField()
     unp = models.CharField(max_length=9)
     initials = models.CharField(max_length=50)
-    phone_number = models.CharField(max_length=13, blank=True, null=True)
-    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=13, blank=True)
+    email = models.EmailField(blank=True)
 
     def get_absolute_url(self):
         """Get url client."""

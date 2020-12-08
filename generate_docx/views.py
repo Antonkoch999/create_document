@@ -106,14 +106,14 @@ def create_documents(request, id_):
                        }
             doc.render(context)
             doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx')
-            email = EmailMessage(
-                'Hello',
-                f'Акт№{form.cleaned_data["number_document"]}',
-                'anton.kisialiou@gmail.com',
-                ['anton.kisialiou@gmail.com'],
-            )
-            email.attach_file(f'./documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
-            email.send()
+            # email = EmailMessage(
+            #     'Hello',
+            #     f'Акт№{form.cleaned_data["number_document"]}',
+            #     'anton.kisialiou@gmail.com',
+            #     ['anton.kisialiou@gmail.com'],
+            # )
+            # email.attach_file(f'./documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+            # email.send()
 
             html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx').value
             return render(request, 'docx.html', {'file': html})
