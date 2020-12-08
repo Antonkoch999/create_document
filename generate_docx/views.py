@@ -53,7 +53,7 @@ def create_documents(request, id_):
     """
     client = get_object_or_404(models.Client, id=id_)
     #TODO Change path geting template
-    doc = DocxTemplate("/home/anton/snap/kisa/template_documents/template_for_24.docx")
+    doc = DocxTemplate("/var/www/anton-python.ru/create_document/template_documents/template_for_24.docx")
     if request.method == 'POST':
         form = forms.InputTextForms(request.POST)
         if form.is_valid():
@@ -107,17 +107,17 @@ def create_documents(request, id_):
                        }
             doc.render(context)
             # TODO Adding path save file
-            doc.save(f'/home/anton/snap/kisa/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+            doc.save(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
             email = EmailMessage(
                 'Hello',
                 f'Акт№{form.cleaned_data["number_document"]}',
                 'anton.kisialiou@gmail.com',
                 ['anton.kisialiou@gmail.com'],
             )
-            email.attach_file(f'/home/anton/snap/kisa/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+            email.attach_file(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
             email.send()
 
-            html = mammoth.convert_to_html(f'/home/anton/snap/kisa/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx').value
+            html = mammoth.convert_to_html(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx').value
             return render(request, 'docx.html', {'file': html})
     else:
         form = forms.InputTextForms()
