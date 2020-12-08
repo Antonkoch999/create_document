@@ -52,8 +52,7 @@ def create_documents(request, id_):
     then outputs the HTML code of the generated template.
     """
     client = get_object_or_404(models.Client, id=id_)
-    #TODO Change path geting template
-    doc = DocxTemplate("/var/www/anton-python.ru/create_document/template_documents/template_for_24.docx")
+    doc = DocxTemplate("./template_documents/template_for_24.docx")
     if request.method == 'POST':
         form = forms.InputTextForms(request.POST)
         if form.is_valid():
@@ -82,7 +81,7 @@ def create_documents(request, id_):
             else:
                 penny = 'копеек'
             context = {'number_document': form.cleaned_data['number_document'],
-                       'data_creation': form.cleaned_data['data_creation'],
+                       'data_creation': form.cleaned_data['data_creation'].replace('/', '.'),
                        "name_of_work": form.cleaned_data['name_of_work'],
                        'count_hours': form.cleaned_data['count_hours'],
                        'cost': form.cleaned_data['cost'].replace(',', '.'),
@@ -106,18 +105,17 @@ def create_documents(request, id_):
                        'email': str(client.email),
                        }
             doc.render(context)
-            # TODO Adding path save file
-            doc.save(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+            doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx')
             email = EmailMessage(
                 'Hello',
                 f'Акт№{form.cleaned_data["number_document"]}',
                 'anton.kisialiou@gmail.com',
                 ['anton.kisialiou@gmail.com'],
             )
-            email.attach_file(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+            email.attach_file(f'./documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
             email.send()
 
-            html = mammoth.convert_to_html(f'/var/www/anton-python.ru/create_document/documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx').value
+            html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx').value
             return render(request, 'docx.html', {'file': html})
     else:
         form = forms.InputTextForms()
@@ -136,22 +134,22 @@ def create_client(request):
     return render(request, 'create_client.html', {'form': form})
 
 
-def input_form(request):
-    #TODO Adding path file
-    doc = DocxTemplate("/home/anton/snap/kisa/template_documents/template_for_24.docx")
-    if request.method == 'POST':
-        form = forms.InputTextForms(request.POST)
-        if form.is_valid():
-            context = {'number_document': form.cleaned_data['number_document'],
-                       'data_creation': form.cleaned_data['data_creation'],
-                       "name_of_work": form.cleaned_data['name_of_work'],
-                       'count_hours': form.cleaned_data['count_hours'],
-                       'cost': form.cleaned_data['cost'],
-                       'cost_words': str(num2text(float(form.cleaned_data['cost'])))}
-            doc.render(context)
-            #TODO Adding path save file
-            doc.save(f'/home/anton/snap/kisa/documents/{datetime.date}/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
-            return HttpResponseRedirect('./')
-    else:
-        form = forms.InputTextForms()
-    return render(request, 'input.html', {'form': form})
+# def input_form(request):
+#     #TODO Adding path file
+#     doc = DocxTemplate("/home/anton/snap/kisa/template_documents/template_for_24.docx")
+#     if request.method == 'POST':
+#         form = forms.InputTextForms(request.POST)
+#         if form.is_valid():
+#             context = {'number_document': form.cleaned_data['number_document'],
+#                        'data_creation': form.cleaned_data['data_creation'],
+#                        "name_of_work": form.cleaned_data['name_of_work'],
+#                        'count_hours': form.cleaned_data['count_hours'],
+#                        'cost': form.cleaned_data['cost'],
+#                        'cost_words': str(num2text(float(form.cleaned_data['cost'])))}
+#             doc.render(context)
+#             #TODO Adding path save file
+#             doc.save(f'/home/anton/snap/kisa/documents/{datetime.date}/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
+#             return HttpResponseRedirect('./')
+#     else:
+#         form = forms.InputTextForms()
+#     return render(request, 'input.html', {'form': form})

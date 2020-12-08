@@ -22,7 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'shnr19h&l*w=r&9$iab&v!*i4+3-48(=z*ycut*a65+0p69-^y'
-# GOOGLE_RECAPTCHA_SECRET_KEY = '6LdsUfYZAAAAAGdPmlsK-5pJkQ5XnZ25avi6lJNm'
 # RECAPTCHA_PUBLIC_KEY = '6LdsUfYZAAAAAMOLtjvqvi5V3i5IOmtzbyS8E6jp' # 127.0.0.0
 # RECAPTCHA_PRIVATE_KEY = '6LdsUfYZAAAAAGdPmlsK-5pJkQ5XnZ25avi6lJNm' # 127.0.0.0
 RECAPTCHA_PUBLIC_KEY = '6LdjKf4ZAAAAAH2qi9WGBinw3b8ztoaYs5ziE0iq'
@@ -31,7 +30,6 @@ RECAPTCHA_PRIVATE_KEY = '6LdjKf4ZAAAAAPY-pel0SAaO9lG24hqKNOy9Ym50'
 DEBUG = True
 
 ALLOWED_HOSTS = ['45.84.226.60', '127.0.0.1']
-
 
 # Application definition
 

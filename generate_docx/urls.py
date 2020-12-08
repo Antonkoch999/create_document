@@ -5,7 +5,6 @@ from django.contrib.auth import views as auth_views
 app_name = 'input'
 
 urlpatterns = [
-    path('input/', views.input_form, name='input'),
     path('', views.start_page, name='start_page'),
     path('input/<int:id_>/', views.create_documents, name='detail_page'),
     path('create_client/', views.create_client, name='create_client'),
