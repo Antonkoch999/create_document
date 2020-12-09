@@ -32,3 +32,8 @@ class Client(models.Model):
 
     def __str__(self):
         return f'{self.name_of_organization}'
+
+
+class FileClient(models.Model):
+    date_creation = models.CharField(max_length=15)
+    number_document = models.CharField(max_length=3)

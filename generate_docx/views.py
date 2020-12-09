@@ -1,8 +1,9 @@
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.mail import EmailMessage
+from django.core.mail import BadHeaderError
 
 import datetime
 import mammoth
@@ -106,15 +107,10 @@ def create_documents(request, id_):
                        }
             doc.render(context)
             doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx')
-            # email = EmailMessage(
-            #     'Hello',
-            #     f'Акт№{form.cleaned_data["number_document"]}',
-            #     'anton.kisialiou@gmail.com',
-            #     ['anton.kisialiou@gmail.com'],
-            # )
-            # email.attach_file(f'./documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
-            # email.send()
-
+            models.FileClient.objects.create(
+                date_creation=form.cleaned_data['data_creation'],
+                number_document=form.cleaned_data['number_document'],
+            )
             html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx').value
             data = form.cleaned_data["data_creation"].replace("/", ".")
             number = form.cleaned_data["number_document"]
@@ -122,6 +118,26 @@ def create_documents(request, id_):
     else:
         form = forms.InputTextForms()
     return render(request, 'detail.html', {'form': form, 'client': client})
+
+
+def send_mail(request):
+    file = models.FileClient.objects.first()
+    print(file.number_document)
+    print(file.date_creation)
+    if file:
+        email = EmailMessage(
+            'Hello',
+            f'Акт№{file.number_document}',
+            'anton.kisialiou@gmail.com',
+            ['anton.kisialiou@gmail.com'],
+        )
+        email.attach_file(f'./documents/{file.date_creation}-Act-{file.number_document}.docx')
+        try:
+            email.send()
+        except BadHeaderError:
+            return HttpResponse('Message not sent')
+        return render(request, 'send_done.html')
+    return render(request, 'detail.html')
 
 
 @login_required(login_url="/login/")
