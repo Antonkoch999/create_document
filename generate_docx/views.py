@@ -105,7 +105,7 @@ def create_documents(request, id_):
                        'email': str(client.email),
                        }
             doc.render(context)
-            doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act{form.cleaned_data["number_document"]}.docx')
+            doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx')
             # email = EmailMessage(
             #     'Hello',
             #     f'Акт№{form.cleaned_data["number_document"]}',
