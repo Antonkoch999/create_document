@@ -121,7 +121,8 @@ def create_documents(request, id_):
 
 
 def send_mail(request):
-    file = models.FileClient.objects.first()
+    """Receive data from the last file and sends it to mail."""
+    file = models.FileClient.objects.last()
     print(file.number_document)
     print(file.date_creation)
     if file:
