@@ -105,7 +105,7 @@ def create_documents(request, id_):
                        'email': str(client.email),
                        }
             doc.render(context)
-            doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx')
+            doc.save(f'./static/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx')
             # email = EmailMessage(
             #     'Hello',
             #     f'Акт№{form.cleaned_data["number_document"]}',
@@ -115,7 +115,7 @@ def create_documents(request, id_):
             # email.attach_file(f'./documents/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
             # email.send()
 
-            html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx').value
+            html = mammoth.convert_to_html(f'./static/{form.cleaned_data["data_creation"].replace("/", ".")}-Акт№{form.cleaned_data["number_document"]}.docx').value
             data = form.cleaned_data["data_creation"].replace("/", ".")
             number = form.cleaned_data["number_document"]
             return render(request, 'docx.html', {'file': html, 'data': data, 'number': number})
