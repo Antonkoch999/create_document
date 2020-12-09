@@ -2,9 +2,16 @@
 {% block content %}
 <br><br>
 <!--{{file|safe}}-->
-<iframe
-    src="http://docs.google.com/gview?url=http://45.84.226.60:8000/static/{{data}}-Акт№{{number}}.docx&embedded=true"
-    style="width:600px; height:500px;"
-    frameborder="0"
-></iframe>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 20%;">
+            <h3 style="width: 650px;margin-left: 20px;">Предварительный просмотр<a style="margin-left: 20px;" href="{% url 'input:create_client' %}" class="btn btn-lg btn-warning">Отправить на почту</a></h3>
+            <iframe
+            src="http://docs.google.com/gview?url=http://45.84.226.60:8000/static/{{data}}-Акт№{{number}}.docx&embedded=true"
+            style="width:650px; height:750px;"
+            ></iframe>
+            <br>
+        </div>
+    </div>
+ </div>
 {% endblock %}
