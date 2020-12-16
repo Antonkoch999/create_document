@@ -89,7 +89,7 @@ def create_documents(request, id_):
                        'rubles': rubles,
                        'penny_cost': form.cleaned_data['cost'][penny_in_the_cost:],
                        'penny': penny,
-                       'cost_words': str(num2text(float(form.cleaned_data['cost'].replace(',', '.')))),
+                       'cost_words': str(num2text(float(form.cleaned_data['cost'].replace(',', '.').replace(' ', '')))),
                        'number_of_contract': str(client.number_of_contract),
                        'date_contract': str(client.date_of_contract),
                        'city': str(client.city),
