@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Данные для отправки письма</h3>
+            <form action="." method="post"  style="margin-top:20px">
+                {% csrf_token %}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.topic }}'></label>
+                            <input type="text" class="form-control" placeholder="Тема письма" name="topic" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.text }}'></label>
+                            <input type="text" class="form-control" placeholder="Текст письма" name="text" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <p><label for='{{ form.email }}'></label>
+                            <input type="text" class="form-control" placeholder="Почта" name="email" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="text-center col-xs-12">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Отправить акт" />
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>
+{% endblock %}

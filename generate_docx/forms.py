@@ -40,6 +40,13 @@ class InputTextForms(forms.Form):
     name_of_work = forms.CharField(max_length=255)
     count_hours = forms.CharField(max_length=20)
     cost = forms.CharField(max_length=30)
+    name_of_document = forms.CharField(max_length=150, required=False)
+
+
+class SendMailForm(forms.Form):
+    topic = forms.CharField(max_length=100)
+    text = forms.CharField(max_length=255)
+    email = forms.EmailField()
 
 
 class CreateClientForm(forms.ModelForm):

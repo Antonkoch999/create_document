@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.mail import EmailMessage
 from django.core.mail import BadHeaderError
 
-import datetime
 import mammoth
 
 from docxtpl import DocxTemplate
@@ -81,15 +80,16 @@ def create_documents(request, id_):
                 penny = 'копейки'
             else:
                 penny = 'копеек'
+            cost = form.cleaned_data['cost'].replace(' ', '')
             context = {'number_document': form.cleaned_data['number_document'],
                        'data_creation': form.cleaned_data['data_creation'].replace('/', '.'),
                        "name_of_work": form.cleaned_data['name_of_work'],
                        'count_hours': form.cleaned_data['count_hours'],
-                       'cost': form.cleaned_data['cost'].replace(',', '.'),
+                       'cost': cost.replace(',', '.'),
                        'rubles': rubles,
                        'penny_cost': form.cleaned_data['cost'][penny_in_the_cost:],
                        'penny': penny,
-                       'cost_words': str(num2text(float(form.cleaned_data['cost'].replace(',', '.').replace(' ', '')))),
+                       'cost_words': str(num2text(float(cost.replace(',', '.')))),
                        'number_of_contract': str(client.number_of_contract),
                        'date_contract': str(client.date_of_contract),
                        'city': str(client.city),
@@ -106,15 +106,25 @@ def create_documents(request, id_):
                        'email': str(client.email),
                        }
             doc.render(context)
-            doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx')
-            models.FileClient.objects.create(
-                date_creation=form.cleaned_data['data_creation'],
-                number_document=form.cleaned_data['number_document'],
-            )
-            html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx').value
+            if not form.cleaned_data['name_of_document']:
+                doc.save(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx')
+                html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["data_creation"].replace("/", ".")}-Act-{form.cleaned_data["number_document"]}.docx').value
+                models.FileClient.objects.create(
+                    date_creation=form.cleaned_data['data_creation'],
+                    number_document=form.cleaned_data['number_document'],
+                )
+            else:
+                doc.save(f'./documents/{form.cleaned_data["name_of_document"]}.docx')
+                html = mammoth.convert_to_html(f'./documents/{form.cleaned_data["name_of_document"]}.docx').value
+                models.FileClient.objects.create(
+                    date_creation=form.cleaned_data['data_creation'],
+                    number_document=form.cleaned_data['number_document'],
+                    name_of_document=form.cleaned_data['name_of_document'],
+                )
+
             data = form.cleaned_data["data_creation"].replace("/", ".")
             number = form.cleaned_data["number_document"]
-            return render(request, 'docx.html', {'file': html, 'data': data, 'number': number})
+            return render(request, 'docx.html', {'file': html, 'data': data, 'number': number, 'form': form})
     else:
         form = forms.InputTextForms()
     return render(request, 'detail.html', {'form': form, 'client': client})
@@ -123,22 +133,28 @@ def create_documents(request, id_):
 def send_mail(request):
     """Receive data from the last file and sends it to mail."""
     file = models.FileClient.objects.last()
-    print(file.number_document)
-    print(file.date_creation)
-    if file:
-        email = EmailMessage(
-            'Hello',
-            f'Акт№{file.number_document}',
-            'anton.kisialiou@gmail.com',
-            ['anton.kisialiou@gmail.com'],
-        )
-        email.attach_file(f'./documents/{file.date_creation}-Act-{file.number_document}.docx')
-        try:
-            email.send()
-        except BadHeaderError:
-            return HttpResponse('Message not sent')
-        return render(request, 'send_done.html')
-    return render(request, 'detail.html')
+    if request.method == "POST":
+        form = forms.SendMailForm(request.POST)
+        if form.is_valid():
+            if file:
+                email = EmailMessage(
+                    f'{form.cleaned_data["topic"]}',
+                    f'{form.cleaned_data["text"]}',
+                    f'{form.cleaned_data["email"]}',
+                    [f'{form.cleaned_data["email"]}'],
+                )
+                if not file.name_of_document:
+                    email.attach_file(f'./documents/{file.date_creation}-Act-{file.number_document}.docx')
+                else:
+                    email.attach_file(f'./documents/{file.name_of_document}.docx')
+                try:
+                    email.send()
+                except BadHeaderError:
+                    return HttpResponse('Message not sent')
+                return render(request, 'send_done.html')
+    else:
+        form = forms.SendMailForm()
+    return render(request, 'send.html', {'form': form})
 
 
 @login_required(login_url="/login/")

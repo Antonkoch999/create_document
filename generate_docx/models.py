@@ -37,3 +37,4 @@ class Client(models.Model):
 class FileClient(models.Model):
     date_creation = models.CharField(max_length=15)
     number_document = models.CharField(max_length=3)
+    name_of_document = models.CharField(max_length=150, blank=True, null=True)
