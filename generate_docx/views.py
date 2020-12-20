@@ -80,7 +80,7 @@ def create_documents(request, id_):
                 penny = 'копейки'
             else:
                 penny = 'копеек'
-            cost = form.cleaned_data['cost'].replace(' ', '')
+            cost = form.cleaned_data['cost'].replace('\\xa', '')
             context = {'number_document': form.cleaned_data['number_document'],
                        'data_creation': form.cleaned_data['data_creation'].replace('/', '.'),
                        "name_of_work": form.cleaned_data['name_of_work'],
