@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h3 style="width: 650px;margin-left: 20px;">Предварительный просмотр<a style="margin-left: 20px;" href="{% url 'input:send_mail' %}" class="btn btn-lg btn-warning">Отправить на почту</a></h3>
+            <h3 style="width: 650px;margin-left: 20px;text-align: center;">Предварительный просмотр</h3>
+                <p style="text-align: center;"><a style="margin-left: 20px;" href="{% url 'input:send_mail' %}" class="btn btn-lg btn-warning">Отправить на почту</a>
+                    <a style="margin-left: 20px;" href="{% url 'input:download_file' %}" class="btn btn-lg btn-warning">Скачать</a></p>
             <iframe
             src="http://docs.google.com/gview?url=http://45.84.226.60:8000/static/{{data}}-Act-{{number}}.docx&embedded=true"
             style="width:650px; height:750px;"

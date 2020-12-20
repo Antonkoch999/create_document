@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.mail import EmailMessage
 from django.core.mail import BadHeaderError
+from django.http import FileResponse
 
 import mammoth
 
@@ -155,6 +156,16 @@ def send_mail(request):
     else:
         form = forms.SendMailForm()
     return render(request, 'send.html', {'form': form})
+
+
+def download_file(request):
+    file = models.FileClient.objects.last()
+    if not file.name_of_document:
+        _file = f'./documents/{file.date_creation}-Act-{file.number_document}.docx'
+    else:
+        _file = f'./documents/{file.name_of_document}.docx'
+    response = FileResponse(open(_file, 'rb'))
+    return response
 
 
 @login_required(login_url="/login/")
