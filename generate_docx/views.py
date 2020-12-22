@@ -123,9 +123,10 @@ def create_documents(request, id_):
                     name_of_document=form.cleaned_data['name_of_document'],
                 )
 
+            name_of_document = form.cleaned_data['name_of_document']
             data = form.cleaned_data["data_creation"].replace("/", ".")
             number = form.cleaned_data["number_document"]
-            return render(request, 'docx.html', {'file': html, 'data': data, 'number': number, 'form': form})
+            return render(request, 'docx.html', {'file': html, 'data': data, 'number': number, 'form': form, 'name_of_document': name_of_document})
     else:
         form = forms.InputTextForms()
     return render(request, 'detail.html', {'form': form, 'client': client})
