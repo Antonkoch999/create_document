@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+
+{% block title %}Registration confirmation{% endblock %}
+{% block content %}
+<br><br>
+ <div class="container container-register">
+    <div class="row">
+        <div class="col-12" style="padding-left: 30%; padding-right: 30%;">
+            <h3 class="text-center">Screenshot<h3>
+            <form action="." method="post"  style="margin-top:20px">
+                {% csrf_token %}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.link }}'></label>
+                            <input type="text" class="form-control" placeholder="Cсылка на страницу" name="link" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                         <p><label for='{{ form.name_of_photo }}'></label>
+                            <input type="text" class="form-control" placeholder="Название скриншота" name="name_of_photo" required autocomplete="off"/></p>
+                    </div>
+                </div>
+                <div class="text-center col-xs-12">
+                    <input type="submit" class="btn btn-lg btn-warning btn-block" value="Получить скриншот" />
+                </div>
+            </form>
+        </div>
+    </div>
+ </div>
+{% endblock %}

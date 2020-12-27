@@ -13,4 +13,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('send/', views.send_mail, name='send_mail'),
     path('download/', views.download_file, name='download_file'),
+    path('screenshot/', views.screenshot, name='screenshot'),
+
 ]

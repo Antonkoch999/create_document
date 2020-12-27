@@ -55,3 +55,8 @@ class CreateClientForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = '__all__'
+
+
+class ScreenshotForm(forms.Form):
+    link = forms.CharField(max_length=255)
+    name_of_photo = forms.CharField(max_length=255)

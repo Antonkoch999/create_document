@@ -181,22 +181,34 @@ def create_client(request):
     return render(request, 'create_client.html', {'form': form})
 
 
-# def input_form(request):
-#     #TODO Adding path file
-#     doc = DocxTemplate("/home/anton/snap/kisa/template_documents/template_for_24.docx")
-#     if request.method == 'POST':
-#         form = forms.InputTextForms(request.POST)
-#         if form.is_valid():
-#             context = {'number_document': form.cleaned_data['number_document'],
-#                        'data_creation': form.cleaned_data['data_creation'],
-#                        "name_of_work": form.cleaned_data['name_of_work'],
-#                        'count_hours': form.cleaned_data['count_hours'],
-#                        'cost': form.cleaned_data['cost'],
-#                        'cost_words': str(num2text(float(form.cleaned_data['cost'])))}
-#             doc.render(context)
-#             #TODO Adding path save file
-#             doc.save(f'/home/anton/snap/kisa/documents/{datetime.date}/{form.cleaned_data["data_creation"]}-Акт№{form.cleaned_data["number_document"]}.docx')
-#             return HttpResponseRedirect('./')
-#     else:
-#         form = forms.InputTextForms()
-#     return render(request, 'input.html', {'form': form})
+import os
+
+from optparse import OptionParser
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from time import sleep
+
+def screenshot(request):
+    CHROME_PATH = '/usr/bin/google-chrome'
+    CHROMEDRIVER_PATH = '/usr/bin/chromedriver'
+    WINDOW_SIZE = "1920,1080"
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=%s" % WINDOW_SIZE)
+    chrome_options.binary_location = CHROME_PATH
+    if request.method == "POST":
+        form = forms.ScreenshotForm(request.POST)
+        if form.is_valid():
+            driver = webdriver.Chrome(
+                executable_path=CHROMEDRIVER_PATH,
+                chrome_options=chrome_options
+            )
+            driver.get(form.cleaned_data['link'])
+            driver.save_screenshot(f"./screenshot/{form.cleaned_data['name_of_photo']}.png")
+            driver.close()
+            name_of_photo = form.cleaned_data['name_of_photo']
+            return render(request, 'get_photo.html', {'form': form, 'name_of_photo': name_of_photo})
+    form = forms.ScreenshotForm()
+    return render(request, 'link.html', {'form': form})
